@@ -1,0 +1,13 @@
+#!/bin/bash
+
+echo "Performing CI checks before pushing ..."
+
+pwsh_command="dotnet build ./src/HelloWorld && dotnet csharpier --check ."
+pwsh -NoProfile -Command $pwsh_command
+
+if [ $? -ne 0 ]; then
+    echo "Error: CI checks failed. See output above."
+    exit 1
+fi
+
+echo "CI checks successful, pushing ..."

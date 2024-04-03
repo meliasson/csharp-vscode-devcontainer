@@ -1,0 +1,55 @@
+{
+	"containerEnv": {
+		// We use these env variables to authenicate against private NuGet
+		// repository. They need to be set in host machine, which can be
+		// accomplished e.g. by exporting them in .bashrc or similar.
+		"NUGET_ACCESS_TOKEN": "${localEnv:NUGET_ACCESS_TOKEN}",
+		"NUGET_SOURCE_PATH": "${localEnv:NUGET_SOURCE_PATH}",
+		"NUGET_USERNAME": "${localEnv:NUGET_USERNAME}"
+	},
+	"customizations": {
+		"vscode": {
+			"settings": {
+				// Let's give PowerShell a chance.
+				"terminal.integrated.defaultProfile.linux": "pwsh"
+			},
+			"extensions": [
+				// With this extension we get by without Visual Studio?
+				"ms-dotnettools.csdevkit",
+				// Let's focus on more important stuff than code formatting.
+				"csharpier.csharpier-vscode"
+			]
+		}
+	},
+	"features": {
+		// The Azure CLI can be useful for example when authenticating
+		// against Azure.
+		"ghcr.io/devcontainers/features/azure-cli:1": {
+			"version": "latest"
+		},
+		// Create a user that isn't root, so we don't have to bother with
+		// the burden of always carrying a loaded gun.
+		"ghcr.io/devcontainers/features/common-utils:2": {
+			"username": "vscode"
+		},
+		// Install a suitable dotnet version.
+		"ghcr.io/devcontainers/features/dotnet:2": {
+			"version": "6.0"
+		},
+		// Let's give PowerShell a chance.
+		"ghcr.io/devcontainers/features/powershell:1": {
+			"version": "latest"
+		}
+	},
+	"image": "ubuntu:22.04",
+	"mounts": [
+		// Configure a "local NuGet respository" so we can publish packages
+		// e.g. for testing. (The idea is that each project has its
+		// own devcontainer and this mount is where dependencies can be
+		// tested before publishing to official remote NuGet repositories.)
+		"source=/srv/local-nuget-feed,target=/home/vscode/local-nuget-feed,type=bind,consistency=cached"
+	],
+	"postCreateCommand": "bash ./.devcontainer/post-create-command.sh",
+	// Default to a non-root user.
+	"remoteUser": "vscode"
+}
