@@ -25,7 +25,7 @@
 		// The Azure CLI can be useful for example when authenticating
 		// against Azure.
 		"ghcr.io/devcontainers/features/azure-cli:1": {
-			"version": "latest"
+			"version": "2.62.0"
 		},
 		// Create a user that isn't root, so we don't have to bother with
 		// the burden of always carrying a loaded gun.
@@ -34,11 +34,12 @@
 		},
 		// Install a suitable dotnet version.
 		"ghcr.io/devcontainers/features/dotnet:2": {
-			"version": "6.0"
+			"version": "8.0",
+			"additionalVersions": "6.0"
 		},
 		// Let's give PowerShell a chance.
 		"ghcr.io/devcontainers/features/powershell:1": {
-			"version": "latest"
+			"version": "7.4.4"
 		}
 	},
 	"image": "ubuntu:22.04",
@@ -49,6 +50,7 @@
 		// tested before publishing to official remote NuGet repositories.)
 		"source=/srv/local-nuget-feed,target=/home/vscode/local-nuget-feed,type=bind,consistency=cached"
 	],
+	"name": "Generic C#",
 	"postCreateCommand": "bash ./.devcontainer/post-create-command.sh",
 	// Default to a non-root user.
 	"remoteUser": "vscode"

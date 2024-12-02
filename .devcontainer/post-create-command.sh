@@ -2,7 +2,10 @@
 
 # Setup PowerShell profile.
 mkdir -p /home/vscode/.config/powershell
-cp ./.devcontainer/powershell-profile.ps1 /home/vscode/.config/powershell/Microsoft.PowerShell_profile.ps1
+cp ./.devcontainer/powershell-profile.ps1 \
+    /home/vscode/.config/powershell/Microsoft.PowerShell_profile.ps1
+cp ./.devcontainer/powershell-profile.ps1 \
+    /home/vscode/.config/powershell/Microsoft.VSCode_profile.ps1
 
 # Make sure that VS Code is Git editor so we don't get trapped in GNU
 # nano or similar.
@@ -23,7 +26,7 @@ pwsh -NoProfile -Command "Install-Module -Name posh-git -Repository PSGallery"
 # love our PowerShell prompts. Since we don't like to be administators
 # on our machines, we pick a theme that doesn't require installation of
 # additional fonts.
-curl -s https://ohmyposh.dev/install.sh | sudo bash -s
+curl -s https://ohmyposh.dev/install.sh | sudo bash -s -- -d /usr/local/bin
 mkdir -p /home/vscode/.oh-my-posh/themes
 cp ./.devcontainer/oh-my-posh-theme.json /home/vscode/.oh-my-posh/themes/minimal.json
 
@@ -43,7 +46,7 @@ if [ -n "$NUGET_SOURCE_PATH" ] \
     --store-password-in-clear-text
 fi
 
-# Configure a local NuGet respository so we can get test versions of
-# dependencies like Biometria's service bus extension.
+# Configure a local NuGet respository so we easily can publish and test
+# versions of dependencies.
 dotnet nuget add source /home/vscode/local-nuget-feed \
   --name local-nuget-feed

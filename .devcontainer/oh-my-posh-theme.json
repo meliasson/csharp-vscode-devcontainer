@@ -41,6 +41,7 @@
                         "merge_icon": "\u25f4 ",
                         "no_commits_icon": "[no commits]",
                         "rebase_icon": "\u2c62 ",
+                        "source": "pwsh",
                         "tag_icon": "\u25b6 "
                     },
                     "style": "powerline",
