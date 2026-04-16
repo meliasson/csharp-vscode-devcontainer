@@ -1,0 +1,21 @@
+root = true
+
+# A large number of formatting rules are all under IDE0055. A number of
+# the options for it conflict with CSharpier. Disabling the rule is
+# recommended for now.
+dotnet_diagnostic.IDE0055.severity = none
+
+# CSharpier doesn't handle all file types. Make sure that the following
+# generic settings aren't in conflict with CSharpier settings.
+[*]
+end_of_line = lf
+indent_style = space
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+[*.{cs,csproj,props,config}]
+# CSharpier's default 100 is unfortunately a bit short in some projects.
+# max_line_length = 120
+
+[*.json]
+indent_size = 2

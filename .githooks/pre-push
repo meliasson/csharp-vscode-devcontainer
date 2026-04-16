@@ -1,13 +1,18 @@
 #!/bin/bash
 
-echo "Performing CI checks before pushing ..."
+set -e
 
-pwsh_command="dotnet build ./src/HelloWorld && dotnet csharpier --check ."
-pwsh -NoProfile -Command $pwsh_command
+sln_files=$(find . -maxdepth 2 -name "*.sln" 2>/dev/null)
 
-if [ $? -ne 0 ]; then
-    echo "Error: CI checks failed. See output above."
-    exit 1
+if [ -z "$sln_files" ]; then
+    echo "No solution file found, skipping pre-push checks."
+    exit 0
 fi
 
-echo "CI checks successful, pushing ..."
+echo "Running pre-push checks..."
+
+dotnet build
+dotnet csharpier --check .
+dotnet outdated --version-lock Minor --fail-on-updates
+
+echo "Pre-push checks passed."
